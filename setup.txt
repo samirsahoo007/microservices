@@ -1,0 +1,37 @@
+sudo apt-get install apache2 apache2-utils ssl-cert
+sudo pip install mod_wsgi libapache2-mod-wsgi
+sudo systemctl restart apache2
+
+***Note:
+Web Server Gateway Interface (WSGI) is a specification, for a standardized interface between Web servers(e.g. apache) and Python Web frameworks/applications.
+It's wsgi who acts as a middle man for python to talk to the webserver.
+
+============================ Do the following if you want to test the wsgi setup =======================
+sudo vi /var/www/html/wsgi_test_script.py
+
+Add the following content:
+def application(environ,start_response):
+    status = '200 OK'
+    html = '<html>\n' \
+           '<body>\n' \
+           ' Hooray, mod_wsgi is working\n' \
+           '</body>\n' \
+           '</html>\n'
+    response_header = [('Content-type','text/html')]
+    start_response(status,response_header)
+    return [html]
+  
+After that, you need to configure Apache server to serve this file over HTTP protocol. Let’s create a configuration file to serve wsgi_test_script.py script over a sub URL.
+
+sudo vim /etc/apache2/conf-available/mod-wsgi.conf
+
+Add the following content:
+
+WSGIScriptAlias /test_wsgi /var/www/html/wsgi_test_script.py
+
+After completing the above steps enable mod-wsgi configuration and restart Apache service.
+
+sudo a2enconf mod-wsgi
+sudo systemctl restart apache2
+
+The setup is ready now. You can test the script by accessing http:/localhost/test_wsgi 
