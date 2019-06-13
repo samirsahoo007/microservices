@@ -1,9 +1,12 @@
 .. tabularcolumns:: |l|c|p{5cm}|
 
-+--------------+---+-----------+
-|  simple text | 2 | 3         |
-+--------------+---+-----------+
-
++-----+-----------------------------------------------+----------------------------------------------------------------+
+|Sr No|          SOAP(Simple Object Access Protocol)  |              REST(REpresentational State Transfer)             |
++-----+-----------------------------------------------+----------------------------------------------------------------+
+|1    |          SOAP is a protocol                   |              REST is an architectural style                    |
++-----+-----------------------------------------------+----------------------------------------------------------------+
+. .
+SOAP can't use REST because it is a protocol. REST can use SOAP web services because it is a concept and can use any protocol like HTTP, SOAP.
 
 Writing a MicroService with Python (Django)
 ===========================================
