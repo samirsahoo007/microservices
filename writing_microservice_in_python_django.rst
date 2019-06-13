@@ -1,10 +1,23 @@
-.. tabularcolumns:: |l|c|p{5cm}|
+SOAP vs REST Web Services
 
-+-----+-----------------------------------------------+----------------------------------------------------------------+
-|Sr No|          SOAP(Simple Object Access Protocol)  |              REST(REpresentational State Transfer)             |
-+-----+-----------------------------------------------+----------------------------------------------------------------+
-|1    |          SOAP is a protocol                   |              REST is an architectural style                    |
-+-----+-----------------------------------------------+----------------------------------------------------------------+
++-----+-------------------------------------------------+----------------------------------------------------------------+
+|Sr No|          SOAP(Simple Object Access Protocol)    |              REST(REpresentational State Transfer)             |
++-----+-------------------------------------------------+----------------------------------------------------------------+
+|1    |          SOAP is a protocol                     |              REST is an architectural style                    |
++-----+-------------------------------------------------+----------------------------------------------------------------+
+|2    |SOAP can't use REST because it is a protocol     |    REST can use SOAP web services because it is a concept      |            |     |                                                 |        and can use any protocol like HTTP, SOAP.               |
++-----+-------------------------------------------------+----------------------------------------------------------------+
+|3    |uses services interfaces to expose business logic|                 REST uses URI to expose business logic.        |                   
++-----+-------------------------------------------------+----------------------------------------------------------------+
+|4    |JAX-WS is the java API for SOAP web services.    |         JAX-RS is the java API for RESTful web services.       |
++-----+-------------------------------------------------+----------------------------------------------------------------+
+|5    |requires more bandwidth and resource than REST.  |              requires less bandwidth and resource than SOAP.   |
++-----+-------------------------------------------------+----------------------------------------------------------------+
+|6    |SOAP defines its own security.                   |RESTful web services inherits security measures from the        |
+|     |                                                 |                                   underlying transport.        |
++-----+-------------------------------------------------+----------------------------------------------------------------+
+|7    |requires more bandwidth and resource than REST.  |              requires less bandwidth and resource than SOAP.   |
++-----+-----------------------------------------------+------------------------------------------------------------------+
 . .
 SOAP can't use REST because it is a protocol. REST can use SOAP web services because it is a concept and can use any protocol like HTTP, SOAP.
 
