@@ -17,7 +17,7 @@
 |     |                                                 |                                   underlying transport.        |
 +-----+-------------------------------------------------+----------------------------------------------------------------+
 |7    |requires more bandwidth and resource than REST.  |              requires less bandwidth and resource than SOAP.   |
-+-----+-----------------------------------------------+------------------------------------------------------------------+
++-----+-------------------------------------------------+----------------------------------------------------------------+
 . .
 SOAP can't use REST because it is a protocol. REST can use SOAP web services because it is a concept and can use any protocol like HTTP, SOAP.
 
