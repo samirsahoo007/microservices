@@ -1,4 +1,4 @@
-SOAP vs REST Web Services
+.. tabularcolumns:: |l|c|p{5cm}|
 
 +-----+-------------------------------------------------+----------------------------------------------------------------+
 |Sr No|          SOAP(Simple Object Access Protocol)    |              REST(REpresentational State Transfer)             |
