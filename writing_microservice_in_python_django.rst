@@ -1,4 +1,4 @@
-.. tabularcolumns:: |l|c|p{5cm}|
+.. SOAP vs REST Web Services:: |l|c|p{5cm}|
 
 +-----+-------------------------------------------------+----------------------------------------------------------------+
 |Sr No|          SOAP(Simple Object Access Protocol)    |              REST(REpresentational State Transfer)             |
