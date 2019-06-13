@@ -13,13 +13,8 @@
 +-----+-------------------------------------------------+----------------------------------------------------------------+
 |7    |requires more bandwidth and resource than REST.  |              requires less bandwidth and resource than SOAP.   |
 +-----+-------------------------------------------------+----------------------------------------------------------------+
-|6    |SOAP defines its own security.                   |RESTful web services inherits security measures from the        |
-|     |                                                 |                                   underlying transport.        |
-|     |                                                 |                                                                |
-+-----+-------------------------------------------------+----------------------------------------------------------------+
-|2    |SOAP can't use REST because it is a protocol     |    REST can use SOAP web services because it is a concept      |            |     |                                                 |        and can use any protocol like HTTP, SOAP.               |
-|     |                                                 |                                                                |
-+-----+-------------------------------------------------+----------------------------------------------------------------+
+
+
 
 
 Writing a MicroService with Python (Django)
