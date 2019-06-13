@@ -1,3 +1,10 @@
+.. tabularcolumns:: |l|c|p{5cm}|
+
++--------------+---+-----------+
+|  simple text | 2 | 3         |
++--------------+---+-----------+
+
+
 Writing a MicroService with Python (Django)
 ===========================================
 
