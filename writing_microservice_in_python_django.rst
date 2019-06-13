@@ -5,6 +5,14 @@
 +-----+-------------------------------------------------+----------------------------------------------------------------+
 |1    |          SOAP is a protocol                     |              REST is an architectural style                    |
 +-----+-------------------------------------------------+----------------------------------------------------------------+
+|3    |uses services interfaces to expose business logic|                 REST uses URI to expose business logic.        |                   
++-----+-------------------------------------------------+----------------------------------------------------------------+
+|4    |JAX-WS is the java API for SOAP web services.    |         JAX-RS is the java API for RESTful web services.       |
++-----+-------------------------------------------------+----------------------------------------------------------------+
+|5    |requires more bandwidth and resource than REST.  |              requires less bandwidth and resource than SOAP.   |
++-----+-------------------------------------------------+----------------------------------------------------------------+
+|7    |requires more bandwidth and resource than REST.  |              requires less bandwidth and resource than SOAP.   |
++-----+-------------------------------------------------+----------------------------------------------------------------+
 
 
 
