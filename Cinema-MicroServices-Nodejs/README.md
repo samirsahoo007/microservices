@@ -6,10 +6,10 @@ Backend for a Cinema web application based on MicroServices Architecture using N
 * The project was developed using Nodejs & Express for REST API's, Containerized in Docker and clustered and scheduled by Docker Swarm.
 
 ## System Design
-![](/images/3.png)
+![](https://github.com/samirsahoo007/microservices/blob/master/Cinema-MicroServices-Nodejs/images/3.png)
 
 ### Technology stack
-![](/images/2woDS.PNG)
+![](https://github.com/samirsahoo007/microservices/blob/master/Cinema-MicroServices-Nodejs/images/2woDS.PNG)
 <table>
 <thead>
 <tr>
@@ -38,7 +38,6 @@ Backend for a Cinema web application based on MicroServices Architecture using N
 </table>
 
 ## Screenshots
+![](https://github.com/samirsahoo007/microservices/blob/master/Cinema-MicroServices-Nodejs/images/7.png)
 
-![](/images/7.png)
-
-![](/images/8.png)
+![](https://github.com/samirsahoo007/microservices/blob/master/Cinema-MicroServices-Nodejs/images/8.png)
