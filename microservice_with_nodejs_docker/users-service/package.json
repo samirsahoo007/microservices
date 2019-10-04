@@ -21,7 +21,7 @@
     "mysql": "^2.10.2"
   },
   "devDependencies": {
-    "eslint": "^2.7.0",
+    "eslint": "^6.5.1",
     "mocha": "^2.4.5",
     "node-inspector": "^0.12.7",
     "should": "^8.3.0",
