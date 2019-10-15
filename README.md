@@ -3,15 +3,15 @@
 |	        	|          SOAP(Simple Object Access Protocol)    |              REST(REpresentational State Transfer)             |
 ------------------------|:-----------------------------------------------:|---------------------------------------------------------------:|
 |Design         	|          protocol                     	  |              	          architectural style                    |
-|Message format		|Only XML					  | Plain text, HTML, XML, JSON, YAML, and others.
-|Approach		|Function-driven (data available as services, e.g.: “getUser”)	|Data-driven (data available as resources, e.g. “user”)
-|Statefulness		|Stateless by default, but it’s possible to make a SOAP API stateful.	|Stateless (no server-side sessions).
+|Message format		|Only XML					  | Plain text, HTML, XML, JSON, YAML, and others
+|Approach		|Function-driven (data available as services, e.g.: "getUser")	|Data-driven (data available as resources, e.g. "user")
+|Statefulness		|Stateless by default, but it's possible to make a SOAP API stateful.	|Stateless (no server-side sessions).
 |Caching		|API calls cannot be cached.	|API calls can be cached.
 |Security		|WS-Security with SSL support. |Built-in ACID compliance.
 |Transfer protocol(s)	|	HTTP, SMTP, UDP, and others.	|Only HTTP
-|Performance    |requires more bandwidth and resource than REST.  |              requires less bandwidth and resource than SOAP.   |
-|Advantages	High security, standardized, extensibility.	|Scalability, better performance, browser-friendliness, flexibility.
-|Disadvantages	Poorer performance, more complexity, less flexibility.	|Less security, not suitable for distributed environments.
+|Performance    	|requires more bandwidth and resource than REST.  |              requires less bandwidth and resource than SOAP.   |
+|Advantages		|High security, standardized, extensibility.	|Scalability, better performance, browser-friendliness, flexibility.
+|Disadvantages		|Poorer performance, more complexity, less flexibility.	|Less security, not suitable for distributed environments.
 
 SOAP defines its own security.                   
 RESTful web services inherits security measures from the  underlying transport.
