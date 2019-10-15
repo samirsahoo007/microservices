@@ -25,6 +25,8 @@ Ref: https://docs.aws.amazon.com/lambda/latest/dg/with-on-demand-https-example-c
 
 In serverless architecture, the server will not run all the time. The server will be active only when a request is there for processing, and the rest of the time, the server will be in sleep mode. Unlike server architecture, a monthly subscription plan need not be taken, as the user only has to pay for the server's active time, which helps to reduce the server cost.
 
+![alt text](https://github.com/samirsahoo007/microservices/blob/master/images/aws_lambda_microservices.png)
+
 
 We'll use the Lambda console to create a Lambda function, and an Amazon API Gateway endpoint to trigger that function. We'll will be able to call the endpoint with any method (GET, POST, PATCH, etc.) to trigger Lambda function.
 
@@ -84,6 +86,48 @@ Replace the existing text with the following:
     }
 }
 After entering the text above choose Save and test.
+
+![alt text](https://github.com/samirsahoo007/microservices/blob/master/images/1.png)
+
+![alt text](https://github.com/samirsahoo007/microservices/blob/master/images/2.png)
+
+![alt text](https://github.com/samirsahoo007/microservices/blob/master/images/3.png)
+
+![alt text](https://github.com/samirsahoo007/microservices/blob/master/images/4.png)
+
+![alt text](https://github.com/samirsahoo007/microservices/blob/master/images/5.png)
+
+![alt text](https://github.com/samirsahoo007/microservices/blob/master/images/6.png)
+
+![alt text](https://github.com/samirsahoo007/microservices/blob/master/images/7.png)
+
+![alt text](https://github.com/samirsahoo007/microservices/blob/master/images/8.png)
+
+![alt text](https://github.com/samirsahoo007/microservices/blob/master/images/9.png)
+
+![alt text](https://github.com/samirsahoo007/microservices/blob/master/images/10.png)
+
+![alt text](https://github.com/samirsahoo007/microservices/blob/master/images/11.png)
+
+![alt text](https://github.com/samirsahoo007/microservices/blob/master/images/12.png)
+
+![alt text](https://github.com/samirsahoo007/microservices/blob/master/images/13.png)
+
+![alt text](https://github.com/samirsahoo007/microservices/blob/master/images/14.png)
+
+![alt text](https://github.com/samirsahoo007/microservices/blob/master/images/15.png)
+
+![alt text](https://github.com/samirsahoo007/microservices/blob/master/images/16.png)
+
+![alt text](https://github.com/samirsahoo007/microservices/blob/master/images/17.png)
+
+![alt text](https://github.com/samirsahoo007/microservices/blob/master/images/18.png)
+
+![alt text](https://github.com/samirsahoo007/microservices/blob/master/images/19.png)
+
+![alt text](https://github.com/samirsahoo007/microservices/blob/master/images/20.png)
+
+
 
 
 Writing a MicroService with Python (Django)
