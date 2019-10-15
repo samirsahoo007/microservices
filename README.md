@@ -1,4 +1,4 @@
-.. tabularcolumns:: |l|c|p{5cm}|
+.. tabularcolumns:: |l|c|p{2cm}|
 
 +-----+-------------------------------------------------+----------------------------------------------------------------+
 |Sr No|          SOAP(Simple Object Access Protocol)    |              REST(REpresentational State Transfer)             |
