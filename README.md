@@ -19,7 +19,7 @@ RESTful web services inherits security measures from the  underlying transport.
 SOAP can't use REST because it is a protocol    
 REST can use SOAP web services because it is a concept and can use any protocol like HTTP, SOAP.
 
-* Building Microservices with Python
+# Building Microservices with Python
 
 Microservices should have some basic features:
 	Easy to start coding your logic, stop worrying about tools/patterns.
@@ -27,6 +27,23 @@ Microservices should have some basic features:
 	Documentation, an essential feature to share how your service it is going to work. In this case, Swagger works pretty well.
 
 	Serializing your input/output in a way shared among all applications. You need to chose a technology like Avro/Protobuf. This is mandatory to be sure all services are sharing the same entities.
+
+## Stack and Patterns
+
+In this basic setup we are going to include those packages:
+
+	Flask (as a Framework)
+	connexion (helpful tool to generate routes and Swagger docs)
+	Flask-Injector (Dependency Injection package)
+	Avro (or any data serialization package)
+
+* Connexion adds a layer on top of Flask to help you building your RESTFul API in a simpler manner, with the great benefit to have at the end Swagger docs. Connexion gives you as well an elegant solution to protect your service behind oAuth2 and a way to versioning your API.
+	OAuth 2.0 is the industry-standard protocol for authorization.
+
+* Dependency Injection is a nice way to inject the dependencies your need in your methods/classes. For this purpose, I chose Flask-Injector, as you can see by the name it’s completely integrated on Flask. With this tool using the decorator @inject I can have the service I need, for instance, ElasticSearch or SQLAlchemy.
+Did you have problems with services sending corrupted data or some payload with the wrong schema? Well, that can be solved using some Serialization tool like Avro or Protobuf. These tools help you to ensure whatever you are receiving or sending has the proper schema.
+
+[a link](https://gist.githubusercontent.com/ssola/f678725ab5000497f34b636794edbd02/raw/9da81ea6c79ff6fd3d2d926f22451790e204ae64/app.py)
 
 Create a Simple Serverless Microservice using Lambda and API Gateway
 =========================================================
