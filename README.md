@@ -19,6 +19,119 @@ RESTful web services inherits security measures from the  underlying transport.
 SOAP can't use REST because it is a protocol    
 REST can use SOAP web services because it is a concept and can use any protocol like HTTP, SOAP.
 
+# Building RESTful web services with Python and the Flask
+
+```
+#!flask/bin/python
+from flask import Flask, jsonify, abort, request, make_response, url_for
+from flask_httpauth import HTTPBasicAuth
+
+app = Flask(__name__, static_url_path = "")
+auth = HTTPBasicAuth()
+
+@auth.get_password
+def get_password(username):
+    if username == 'miguel':
+        return 'python'
+    return None
+
+@auth.error_handler
+def unauthorized():
+    return make_response(jsonify( { 'error': 'Unauthorized access' } ), 403)
+    # return 403 instead of 401 to prevent browsers from displaying the default auth dialog
+    
+@app.errorhandler(400)
+def not_found(error):
+    return make_response(jsonify( { 'error': 'Bad request' } ), 400)
+
+@app.errorhandler(404)
+def not_found(error):
+    return make_response(jsonify( { 'error': 'Not found' } ), 404)
+
+tasks = [
+    {
+        'id': 1,
+        'title': u'Buy groceries',
+        'description': u'Milk, Cheese, Pizza, Fruit, Tylenol', 
+        'done': False
+    },
+    {
+        'id': 2,
+        'title': u'Learn Python',
+        'description': u'Need to find a good Python tutorial on the web', 
+        'done': False
+    }
+]
+
+def make_public_task(task):
+    new_task = {}
+    for field in task:
+        if field == 'id':
+            new_task['uri'] = url_for('get_task', task_id = task['id'], _external = True)
+        else:
+            new_task[field] = task[field]
+    return new_task
+    
+@app.route('/todo/api/v1.0/tasks', methods = ['GET'])
+@auth.login_required
+def get_tasks():
+    return jsonify( { 'tasks': map(make_public_task, tasks) } )
+
+@app.route('/todo/api/v1.0/tasks/<int:task_id>', methods = ['GET'])
+@auth.login_required
+def get_task(task_id):
+    task = filter(lambda t: t['id'] == task_id, tasks)
+    if len(task) == 0:
+        abort(404)
+    return jsonify( { 'task': make_public_task(task[0]) } )
+
+@app.route('/todo/api/v1.0/tasks', methods = ['POST'])
+@auth.login_required
+def create_task():
+    if not request.json or not 'title' in request.json:
+        abort(400)
+    task = {
+        'id': tasks[-1]['id'] + 1,
+        'title': request.json['title'],
+        'description': request.json.get('description', ""),
+        'done': False
+    }
+    tasks.append(task)
+    return jsonify( { 'task': make_public_task(task) } ), 201
+
+@app.route('/todo/api/v1.0/tasks/<int:task_id>', methods = ['PUT'])
+@auth.login_required
+def update_task(task_id):
+    task = filter(lambda t: t['id'] == task_id, tasks)
+    if len(task) == 0:
+        abort(404)
+    if not request.json:
+        abort(400)
+    if 'title' in request.json and type(request.json['title']) != unicode:
+        abort(400)
+    if 'description' in request.json and type(request.json['description']) is not unicode:
+        abort(400)
+    if 'done' in request.json and type(request.json['done']) is not bool:
+        abort(400)
+    task[0]['title'] = request.json.get('title', task[0]['title'])
+    task[0]['description'] = request.json.get('description', task[0]['description'])
+    task[0]['done'] = request.json.get('done', task[0]['done'])
+    return jsonify( { 'task': make_public_task(task[0]) } )
+    
+@app.route('/todo/api/v1.0/tasks/<int:task_id>', methods = ['DELETE'])
+@auth.login_required
+def delete_task(task_id):
+    task = filter(lambda t: t['id'] == task_id, tasks)
+    if len(task) == 0:
+        abort(404)
+    tasks.remove(task[0])
+    return jsonify( { 'result': True } )
+    
+if __name__ == '__main__':
+    app.run(debug = True)
+
+```
+
 # Building Microservices with Python
 
 Microservices should have some basic features:
@@ -35,7 +148,7 @@ In this basic setup we are going to include those packages:
 	Flask (as a Framework)
 	connexion (helpful tool to generate routes and Swagger docs)
 	Flask-Injector (Dependency Injection package)
-	Avro (or any data serialization package)
+	fastavro (Avro or any data serialization package)
 
 * Connexion adds a layer on top of Flask to help you building your RESTFul API in a simpler manner, with the great benefit to have at the end Swagger docs. Connexion gives you as well an elegant solution to protect your service behind oAuth2 and a way to versioning your API.
 	OAuth 2.0 is the industry-standard protocol for authorization.
@@ -43,8 +156,40 @@ In this basic setup we are going to include those packages:
 * Dependency Injection is a nice way to inject the dependencies your need in your methods/classes. For this purpose, I chose Flask-Injector, as you can see by the name it’s completely integrated on Flask. With this tool using the decorator @inject I can have the service I need, for instance, ElasticSearch or SQLAlchemy.
 Did you have problems with services sending corrupted data or some payload with the wrong schema? Well, that can be solved using some Serialization tool like Avro or Protobuf. These tools help you to ensure whatever you are receiving or sending has the proper schema.
 
-[a link](https://gist.githubusercontent.com/ssola/f678725ab5000497f34b636794edbd02/raw/9da81ea6c79ff6fd3d2d926f22451790e204ae64/app.py)
+### Serializing your payloads
 
+A common pitfall building services are sharing wrong payloads. For instance, you expect an Item object with a name and an id. But working with plain JSON is not possible to enforce it.
+We can do it right now with your connexion yaml, it will throw exceptions if something is wrong. But in this case, we need to ensure the data between different services using for instance RabbitMQ.
+We can use JSON as I said, but then for each application, you will need to have all the required validations. If your platform works with several programming languages that can be a hassle.
+With some tools like Avro or Protobuf, we can have a common serialization objects among different programming languages. A good practice would be to have a repo where you have all your Avro/Protobuf serializers. Those can be used almost for any programming language.
+
+In this case, Avro gives us:
+	Rich data structures.
+	A compact, fast, binary data format.
+	A container file, to store persistent data.
+	Remote procedure call (RPC).
+
+Simple integration with dynamic languages. Code generation is not required to read or write data files nor to use or implement RPC protocols. Code generation as an optional optimization, only worth implementing for statically typed languages.
+
+##### Libraries:
+
+	import connexion
+
+	from injector import Binder
+	from flask_injector import FlaskInjector
+	from connexion.resolver import RestyResolver
+	from services.provider import ItemsProvider
+
+Ref: https://github.com/samirsahoo007/microservices/blob/master/python-flask-microservice/app.py
+
+
+See details:
+
+[Part 1](https://medium.com/@ssola/building-microservices-with-python-part-i-5240a8dcc2fb)
+
+[Part 2](https://medium.com/@ssola/building-microservices-with-python-part-2-9f951199094a)
+
+[Part 3](https://medium.com/@ssola/building-microservices-with-python-part-3-a556a4c4bc00)
 Create a Simple Serverless Microservice using Lambda and API Gateway
 =========================================================
 Ref: https://docs.aws.amazon.com/lambda/latest/dg/with-on-demand-https-example-configure-event-source_1.html
