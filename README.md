@@ -19,6 +19,15 @@ RESTful web services inherits security measures from the  underlying transport.
 SOAP can't use REST because it is a protocol    
 REST can use SOAP web services because it is a concept and can use any protocol like HTTP, SOAP.
 
+* Building Microservices with Python
+
+Microservices should have some basic features:
+	Easy to start coding your logic, stop worrying about tools/patterns.
+
+	Documentation, an essential feature to share how your service it is going to work. In this case, Swagger works pretty well.
+
+	Serializing your input/output in a way shared among all applications. You need to chose a technology like Avro/Protobuf. This is mandatory to be sure all services are sharing the same entities.
+
 Create a Simple Serverless Microservice using Lambda and API Gateway
 =========================================================
 Ref: https://docs.aws.amazon.com/lambda/latest/dg/with-on-demand-https-example-configure-event-source_1.html
