@@ -20,9 +20,12 @@ RESTful web services inherits security measures from the  underlying transport.
 SOAP can't use REST because it is a protocol    
 REST can use SOAP web services because it is a concept and can use any protocol like HTTP, SOAP.
 
-Create a Simple Microservice using Lambda and API Gateway
+Create a Simple Serverless Microservice using Lambda and API Gateway
 =========================================================
 Ref: https://docs.aws.amazon.com/lambda/latest/dg/with-on-demand-https-example-configure-event-source_1.html
+
+In serverless architecture, the server will not run all the time. The server will be active only when a request is there for processing, and the rest of the time, the server will be in sleep mode. Unlike server architecture, a monthly subscription plan need not be taken, as the user only has to pay for the server's active time, which helps to reduce the server cost.
+
 
 We'll use the Lambda console to create a Lambda function, and an Amazon API Gateway endpoint to trigger that function. We'll will be able to call the endpoint with any method (GET, POST, PATCH, etc.) to trigger Lambda function.
 
