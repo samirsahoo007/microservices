@@ -131,6 +131,10 @@ if __name__ == '__main__':
     app.run(debug = True)
 
 ```
+See details here:
+[Designing a RESTful API with Python and Flask](https://blog.miguelgrinberg.com/post/designing-a-restful-api-with-python-and-flask/page/5)
+[Designing a RESTful API using Flask-RESTful](https://blog.miguelgrinberg.com/post/designing-a-restful-api-using-flask-restful)
+[RESTful Authentication with Flask](https://blog.miguelgrinberg.com/post/restful-authentication-with-flask)
 
 # Building Microservices with Python
 
@@ -190,6 +194,7 @@ See details:
 [Part 2](https://medium.com/@ssola/building-microservices-with-python-part-2-9f951199094a)
 
 [Part 3](https://medium.com/@ssola/building-microservices-with-python-part-3-a556a4c4bc00)
+
 Create a Simple Serverless Microservice using Lambda and API Gateway
 =========================================================
 Ref: https://docs.aws.amazon.com/lambda/latest/dg/with-on-demand-https-example-configure-event-source_1.html
