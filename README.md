@@ -25,7 +25,12 @@ Ref: https://docs.aws.amazon.com/lambda/latest/dg/with-on-demand-https-example-c
 
 In serverless architecture, the server will not run all the time. The server will be active only when a request is there for processing, and the rest of the time, the server will be in sleep mode. Unlike server architecture, a monthly subscription plan need not be taken, as the user only has to pay for the server's active time, which helps to reduce the server cost.
 
+You upload your code to Lambda, and it takes care of everything required to run and scale its execution and fulfill conditions and high availability requirements.
+
 ![alt text](https://github.com/samirsahoo007/microservices/blob/master/images/aws_lambda_microservices.png)
+
+
+![alt text](https://github.com/samirsahoo007/microservices/blob/master/images/sserverless_architecture.png)
 
 
 We'll use the Lambda console to create a Lambda function, and an Amazon API Gateway endpoint to trigger that function. We'll will be able to call the endpoint with any method (GET, POST, PATCH, etc.) to trigger Lambda function.
