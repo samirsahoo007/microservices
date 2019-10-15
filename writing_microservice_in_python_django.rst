@@ -33,7 +33,7 @@ POST: Create an item
 PUT: Update an item
 
 Create an API Using Amazon API Gateway
-======================================
+--------------------------------------
 
 1. Sign in to the AWS Management Console and open the AWS Lambda console.
 
@@ -57,13 +57,14 @@ Create an API Using Amazon API Gateway
 
         Security – Open.
 
-Choose Create function.
+    Choose Create function.
 
-When you complete the wizard and create your function, Lambda creates a proxy resource named lambda-microservice under the API name you selected. For more information about proxy resources, see Configure Proxy Integration for a Proxy Resource.
+When you complete the wizard and create your function, Lambda creates a proxy resource named lambda-microservice under the API name you selected. For more information about proxy resources, see Configure Proxy Integration for a Proxy Resource.(https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-set-up-simple-proxy.html)
 
 A proxy resource has an AWS_PROXY integration type and a catch-all method ANY. The AWS_PROXY integration type applies a default mapping template to pass through the entire request to the Lambda function and transforms the output from the Lambda function to HTTP responses. The ANY method defines the same integration setup for all the supported methods, including GET, POST, PATCH, DELETE and others.
 
 Test Sending an HTTPS Request
+-----------------------------
 In this step, you will use the console to test the Lambda function. In addition, you can run a curl command to test the end-to-end experience. That is, send an HTTPS request to your API method and have Amazon API Gateway invoke your Lambda function. In order to complete the steps, make sure you have created a DynamoDB table and named it "MyTable". For more information, see Create a DynamoDB Table with a Stream Enabled
 
 To test the API
