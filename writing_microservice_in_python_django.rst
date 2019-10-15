@@ -22,6 +22,8 @@ REST can use SOAP web services because it is a concept and can use any protocol 
 
 Create a Simple Microservice using Lambda and API Gateway
 =========================================================
+Ref: https://docs.aws.amazon.com/lambda/latest/dg/with-on-demand-https-example-configure-event-source_1.html
+
 We'll use the Lambda console to create a Lambda function, and an Amazon API Gateway endpoint to trigger that function. We'll will be able to call the endpoint with any method (GET, POST, PATCH, etc.) to trigger Lambda function.
 
 DELETE: delete an item from a DynamoDB table
