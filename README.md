@@ -1,3 +1,214 @@
+# What is REST(REpresentational State Transfer)?
+The characteristics of a REST system are defined by six design rules:
+
+	* Client-Server: There should be a separation between the server that offers a service, and the client that consumes it.
+
+	* Stateless: Each request from a client must contain all the information required by the server to carry out the request. In other words, the server cannot store information provided by the client in one request and use it in another request.
+
+	* Cacheable: The server must indicate to the client if requests can be cached or not.
+
+	* Layered System: Communication between a client and a server should be standardized in such a way that allows intermediaries to respond to requests instead of the end server, without the client having to do anything different.
+
+	* Uniform Interface: The method of communication between a client and a server must be uniform.
+
+	* Code on demand: Servers can provide executable code or scripts for clients to execute in their context. This constraint is the only one that is optional.
+
+
+# Designing a simple web service
+
+GET	http://[hostname]/todo/api/v1.0/tasks			Retrieve list of tasks
+
+GET	http://[hostname]/todo/api/v1.0/tasks/[task_id]		Retrieve a task
+
+POST	http://[hostname]/todo/api/v1.0/tasks			Insert/Create a new task
+
+PUT	http://[hostname]/todo/api/v1.0/tasks/[task_id]		Update an existing task
+
+DELETE	http://[hostname]/todo/api/v1.0/tasks/[task_id]		Delete a task
+
+
+
+
+We can define a task as having the following fields:
+
+id: unique identifier for tasks. Numeric type.
+
+title: short task description. String type.
+
+description: long task description. Text type.
+
+done: task completion state. Boolean type.
+
+
+1. Setup Flask in a virtual envoronment https://github.com/samirsahoo007/technologies/blob/master/setting_up_of_virtualenv.md
+
+```
+	mkdir todo-api;cd todo-api
+	virtualenv flask
+	source flask/bin/activate
+	pip install flask
+```
+
+2. Create app.py file with the following
+
+```
+#!flask/bin/python
+from flask import Flask
+
+app = Flask(__name__)
+
+@app.route('/')
+def index():
+    return "Hello, World!"
+
+if __name__ == '__main__':
+    app.run(debug=True)
+```
+
+3. Run app.py
+
+```
+$ chmod a+x app.py
+$ ./app.py
+ * Running on http://127.0.0.1:5000/
+```
+
+** Done. Now your webservice is running on http://localhost:5000
+
+# Implementing RESTful services in Python and Flask
+
+Let's keep it simple...
+In place of a database we will store our task list in a memory structure. This will only work when the web server that runs our application is single process and single threaded. This is okay for Flask's own development web server. It is not okay to use this technique on a production web server, for that a proper database setup must be used.
+
+1. GET: Modify app.py as below to retrive list of tasks
+
+```
+#!flask/bin/python
+from flask import Flask, jsonify
+
+app = Flask(__name__)
+
+tasks = [
+    {
+        'id': 1,
+        'title': u'Buy groceries',
+        'description': u'Milk, Cheese, Pizza, Fruit, Tylenol', 
+        'done': False
+    },
+    {
+        'id': 2,
+        'title': u'Learn Python',
+        'description': u'Need to find a good Python tutorial on the web', 
+        'done': False
+    }
+]
+
+@app.route('/todo/api/v1.0/tasks', methods=['GET'])
+def get_tasks():
+    return jsonify({'tasks': tasks})
+
+if __name__ == '__main__':
+    app.run(debug=True)
+```
+
+2. Test it: 
+
+```
+$ curl -i http://localhost:5000/todo/api/v1.0/tasks
+```
+
+3. GET: Add the following to retrieve a single task
+
+```
+from flask import abort
+
+@app.route('/todo/api/v1.0/tasks/<int:task_id>', methods=['GET'])
+def get_task(task_id):
+    task = [task for task in tasks if task['id'] == task_id]
+    if len(task) == 0:
+        abort(404)
+    return jsonify({'task': task[0]})
+```
+ 
+4. Test it:
+
+```
+$ curl -i http://localhost:5000/todo/api/v1.0/tasks/2
+$ curl -i http://localhost:5000/todo/api/v1.0/tasks/3
+```
+
+5. POST: Let's insert a new item in our task database
+
+```
+from flask import request
+
+@app.route('/todo/api/v1.0/tasks', methods=['POST'])
+def create_task():
+    if not request.json or not 'title' in request.json:
+        abort(400)
+    task = {
+        'id': tasks[-1]['id'] + 1,
+        'title': request.json['title'],
+        'description': request.json.get('description', ""),
+        'done': False
+    }
+    tasks.append(task)
+    return jsonify({'task': task}), 201
+```
+
+6. Test it
+
+```
+$ curl -i -H "Content-Type: application/json" -X POST -d '{"title":"Read a book"}' http://localhost:5000/todo/api/v1.0/tasks
+
+Verify the new entry
+$ curl -i http://localhost:5000/todo/api/v1.0/tasks
+```
+
+7. PUT and DELETE
+
+```
+@app.route('/todo/api/v1.0/tasks/<int:task_id>', methods=['PUT'])
+def update_task(task_id):
+    task = [task for task in tasks if task['id'] == task_id]
+    if len(task) == 0:
+        abort(404)
+    if not request.json:
+        abort(400)
+    if 'title' in request.json and type(request.json['title']) != unicode:
+        abort(400)
+    if 'description' in request.json and type(request.json['description']) is not unicode:
+        abort(400)
+    if 'done' in request.json and type(request.json['done']) is not bool:
+        abort(400)
+    task[0]['title'] = request.json.get('title', task[0]['title'])
+    task[0]['description'] = request.json.get('description', task[0]['description'])
+    task[0]['done'] = request.json.get('done', task[0]['done'])
+    return jsonify({'task': task[0]})
+
+@app.route('/todo/api/v1.0/tasks/<int:task_id>', methods=['DELETE'])
+def delete_task(task_id):
+    task = [task for task in tasks if task['id'] == task_id]
+    if len(task) == 0:
+        abort(404)
+    tasks.remove(task[0])
+    return jsonify({'result': True})
+```
+
+8. Test it
+
+```
+$ curl -i -H "Content-Type: application/json" -X PUT -d '{"done":true}' http://localhost:5000/todo/api/v1.0/tasks/2		# Update task 2
+
+Verify it
+$  curl -i http://localhost:5000/todo/api/v1.0/tasks
+
+$ curl -i -X DELETE http://localhost:5000/todo/api/v1.0/tasks/2		# Delete task 2
+Verify it
+$  curl -i http://localhost:5000/todo/api/v1.0/tasks
+
+```
+
 # Building RESTful web services with Python and the Flask
 
 ```
