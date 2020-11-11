@@ -310,6 +310,32 @@ See details:
 
 [Part 3](https://medium.com/@ssola/building-microservices-with-python-part-3-a556a4c4bc00)
 
+# How is Kafka used with microservice architecture?
+
+If you consider a set of micro services that collectively make up a product, not all of will be mission critical.
+
+But there are couple of mission critical components where in if a network call is missed the loss can be unrecoverable.
+
+Let me tell you a real world use case from my day to day life and at the end I would expect you to say yes, this is the reason why I choose kafka.
+
+Let's say you are booking a hotel with Goibibo where we say the maximum number of times a promoCode can be used is 2.
+
+So after a successfull payment with a promo code the payments microservice has to notify the discounting microservice that a user had used this promo code. So that next time when user comes to the booking page to book the hotel, we check his usage on the promocode and let the UI microservice know if a promo code is applicable for the user or not.
+
+Now consider this scenario where in once the user made the payment and by the time payments service is about to call discounting service , the discounting service went down for a toss.
+
+As a normal Rest Service the payments microservice retries for 3 or 5 times and if the discounting service is still not up what should it do ?. Should it halt the transaction just because of a tech issue where one microservice is down . Well that's a worst user experience.
+
+Here comes the hero (Kafka ) to our aid.
+
+The payments service pushes a message to Kafka with the event details and Kafka stores the message with a new offset. The discounting service keeps polling for newer messages and read the new message and does some stuff and then commits to Kafka saying boss, i received an event and I am done with my application logic. Now commit the offset saying I have read the message .
+
+So in this way even if the consumer service is down for sometime as the message is pushed to Kafka , the payment microservice simply updates the transaction as success . It's up to discounting service how it picks from Kafka and does logic on top of the event.
+
+With the inclusion of Kafka we can make the transactions reliable.
+
+Any sort of events which cannot be missed capturing had to be through a message broker and not through a network call.
+
 Create a Simple Serverless Microservice using Lambda and API Gateway
 =========================================================
 Ref: https://docs.aws.amazon.com/lambda/latest/dg/with-on-demand-https-example-configure-event-source_1.html
