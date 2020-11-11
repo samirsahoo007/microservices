@@ -336,6 +336,26 @@ With the inclusion of Kafka we can make the transactions reliable.
 
 Any sort of events which cannot be missed capturing had to be through a message broker and not through a network call.
 
+### Another explanation...
+
+A typical microservices solutions will have dozens of “independent” services interacting with each other, and that is a huge problem if not handled properly. It is not feasible for each service to have a direct connection with every service that it wants to talk to for 2 reasons: First, the number of such connections would grow rapidly; Second, the service being called may be down or may have moved to another server.
+
+If you have 2 services, then there are upto 2 direct connections. With 3 services, there are 6. With 4 services, there are 12 and so on. In a way, such connections can be viewed as coupling between the objects in a OO program. You need to interact with other objects but the lesser the coupling between their classes, the more manageable your program is. This is a similar dependency management challenge but at the scale of services, not classes/objects.
+
+Message Brokers are a way of decoupling the sending and receiving services through the concept of Publish & Subscribe. The sending service (producer) posts it message/request on the message queue and the receiving service (consumer), which is listening for messages, will receive it. Message Broking is one of key use cases for Kafka.
+
+Another thing Message Brokers do is queue or retain the message till the consumer picks it up. If the consumer service is down or busy when the sender sends the message, it can always pick it up later. The upshot of this is that the producer service doesn’t have to worry about checking if the message has gone through, retry on failure, etc.
+
+Kafka is great because it allows us to have both Pub-Sub as well as queuing features (historically, either one or the other was supported by such brokers). It also guarantees that the order of the messages is maintained and not subject to network latency or other factors. Kafka also allows us to “broadcast” messages to multiple consumers, if needed.
+
+So essentially, Kafka helps us build a reliable, scalable, low-latency message plumbing for a complex microservices solution with minimum configuration.
+
+When microservices communicate in an asynchronous manner, they can use a queue or publish-subscribe mechanism. Kafka offers those, and has them persistent on the “brokers”, i.e. Kafka servers. So a microservice will write messages to one or more topics, and some other microservices on the other side, which are already subscribed to those topics, will receive those messages, when they are ready for them (if they are already working on previous ones they will not be flooded with all the messages), or immediately, if they are free (but one should never assume this is the case). So you can do pull-messaging with Kafka, as opposed to push, and this is good for stability and resource utilization and cheap throughput. However you could do push, as well, if you want, with a consumer that reads all messages full speed and pushes them downstream, but that would not typically be wise. In micro services you should typically see the pull version, where the message is really processed, and semantics like exactly-once can be implemented with Kafka playing a good part in it, with the right configuration and consumer/producer code.
+
+At FabHotels: India’s Best Budget Hotels , In Backend engineering we are using Kafka to share data between different microservices. This architecture really helps to scale.
+We have designed Lambada Architecture for analytics using Kafka.
+
+
 Create a Simple Serverless Microservice using Lambda and API Gateway
 =========================================================
 Ref: https://docs.aws.amazon.com/lambda/latest/dg/with-on-demand-https-example-configure-event-source_1.html
