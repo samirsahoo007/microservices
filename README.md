@@ -312,6 +312,13 @@ See details:
 
 # How is Kafka used with microservice architecture?
 
+One of the traditional approaches for communicating between microservices is through their REST APIs. However, as your system evolves and the number of microservices grows, communication becomes more complex, and the architecture might start resembling our old friend the spaghetti anti-pattern, with services depending on each other or tightly coupled, slowing down development teams. This model can exhibit low latency but only works if services are made highly available.
+
+To overcome this design disadvantage, new architectures aim to decouple senders from receivers, with asynchronous messaging. In a Kafka-centric architecture, low latency is preserved, with additional advantages like message balancing among available consumers and centralized management.
+
+When dealing with a brownfield platform (legacy), a recommended way to de-couple a monolith and ready it for a move to microservices is to implement asynchronous messaging.
+
+
 If you consider a set of micro services that collectively make up a product, not all of will be mission critical.
 
 But there are couple of mission critical components where in if a network call is missed the loss can be unrecoverable.
