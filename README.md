@@ -312,6 +312,22 @@ See details:
 
 # How is Kafka used with microservice architecture?
 
+## Use Case
+
+Let’s suppose we have a very simple scenario: a service responsible for creating new accounts in a banking system which needs to communicate to another service which is responsible for sending a confirmation email to the user, after the creation.
+In a monolith system we would probably have all this logic in the same codebase, in a synchronous way. But in the shiny world of microservices, we have decoupled these responsibilities in two different projects and now we need to let the email service knows that a confirmation mail must be sent.
+
+## Solution
+
+Kafka™ is used for building real-time data pipelines and streaming apps. It is horizontally scalable, fault-tolerant, wicked fast, and runs in production in thousands of companies.
+
+Kafka is a great fit for many use cases, mostly for website activity tracking, log aggregation, operational metrics, stream processing and, in this post, for messaging.
+This platform provides us an elegant way to create a data pipeline where we can connect producers (New Account Service) which will be creating new records in the data pipeline and consumers (Email Service) which will be listening for new records.
+If you come from a RDBMS world you can imagine that a topic is a table, a producer is someone who will be inserting new data to this table and the consumer is an application which will be querying your database to find new entries.
+
+There are some other platforms working on this kind of solution, as ActiveMQ and RabbitMQ, but Kafka seems to perform and scale in a better way.
+
+
 One of the traditional approaches for communicating between microservices is through their REST APIs. However, as your system evolves and the number of microservices grows, communication becomes more complex, and the architecture might start resembling our old friend the spaghetti anti-pattern, with services depending on each other or tightly coupled, slowing down development teams. This model can exhibit low latency but only works if services are made highly available.
 
 To overcome this design disadvantage, new architectures aim to decouple senders from receivers, with asynchronous messaging. In a Kafka-centric architecture, low latency is preserved, with additional advantages like message balancing among available consumers and centralized management.
