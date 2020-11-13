@@ -378,6 +378,16 @@ When microservices communicate in an asynchronous manner, they can use a queue o
 At FabHotels: India’s Best Budget Hotels , In Backend engineering we are using Kafka to share data between different microservices. This architecture really helps to scale.
 We have designed Lambada Architecture for analytics using Kafka.
 
+### Interaction Styles
+When selecting an IPC mechanism for a service, it is useful to think first about how services interact. There are a variety of client⇔service interaction styles. They can be categorized along two dimensions.
+
+One-to-one – Each client request is processed by exactly one service instance.
+One-to-many – Each request is processed by multiple service instances.
+
+The second dimension:
+
+Synchronous – The client expects a timely response from the service and might even block while it waits.
+Asynchronous – The client doesn’t block while waiting for a response, and the response, if any, isn’t necessarily sent immediately.
 
 Create a Simple Serverless Microservice using Lambda and API Gateway
 =========================================================
